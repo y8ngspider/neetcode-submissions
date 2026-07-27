@@ -1,0 +1,18 @@
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        
+        memo = {}
+        
+        def dfs(i, curAmt):
+            if i >= len(coins):
+                return 0
+            if (i, curAmt) in memo:
+                return memo[(i,curAmt)]
+            if curAmt == amount:
+                return 1
+            if curAmt > amount:
+                return 0 
+            memo[(i,curAmt)] = dfs(i+1, curAmt) + dfs(i, curAmt + coins[i])
+            return memo[(i,curAmt)]
+        
+        return dfs(0,0)
